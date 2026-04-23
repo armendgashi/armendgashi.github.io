@@ -56,6 +56,39 @@ header.hero {
   padding-bottom: 32px;
   border-bottom: 1px solid var(--border);
 }
+header.hero .hero-top {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+header.hero .hero-text { min-width: 0; }
+header.hero .hero-text .name { margin: 0 0 6px 0; }
+header.hero .hero-text .role { margin: 0; }
+header.hero .avatar {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  transition: transform 250ms ease, border-color 250ms ease;
+  transform-origin: left center;
+  will-change: transform;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+header.hero .avatar:hover {
+  transform: scale(1.5);
+  border-color: var(--accent);
+}
+@media (max-width: 600px) {
+  header.hero .hero-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+  header.hero .avatar { width: 96px; height: 96px; }
+}
 .name {
   font-size: 28px;
   font-weight: 600;
