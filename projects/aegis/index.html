@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aegis · Armend Gashi</title>
+<meta name="description" content="Aegis: HTTP proxy guardrail for AI agent penetration testing. Sandboxing, scope enforcement, secret injection, and audit logs for autonomous offensive AI." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>Aegis</h1>
+  <p class="subtitle">HTTP proxy guardrail for AI agent penetration testing &middot; written in Rust</p>
+
+  <section>
+    <h2>What it is</h2>
+    <p>Aegis is a Rust forward proxy that wraps AI agents (Claude Code, Codex CLI, or any custom tool) during offensive security tasks. It intercepts HTTP/HTTPS traffic and shell commands, blocking destructive actions before they reach client infrastructure while letting legitimate offensive operations pass through.</p>
+  </section>
+
+  <section>
+    <h2>Why it exists</h2>
+    <p>Autonomous AI agents running with full permissions (<code>--dangerously-skip-permissions</code>, <code>--full-auto</code>) can cause real damage during pentesting engagements. A misinterpreted prompt can turn <code>SELECT * FROM users</code> into <code>DROP TABLE users</code>. Aegis sits between the agent and the network, enforcing scope boundaries and blocking destructive operations in real time.</p>
+  </section>
+
+  <section>
+    <h2>What it does</h2>
+    <ul>
+      <li><strong>Scope enforcement</strong> &middot; intercepts every HTTP/HTTPS request and shell command; blocks anything outside the engagement&rsquo;s authorized scope.</li>
+      <li><strong>Kernel-isolated sandboxing</strong> &middot; macOS Seatbelt and Linux Landlock to confine the agent at the OS level, not just the proxy layer.</li>
+      <li><strong>Proxy-based secret injection</strong> &middot; API keys are injected by the proxy on egress, so they never touch the agent process or its prompt context.</li>
+      <li><strong>Policy system</strong> &middot; declarative policies and presets, plus custom middlewares for engagement-specific rules.</li>
+      <li><strong>Audit logs</strong> &middot; full request/response and shell-command record for after-action review and client transparency.</li>
+      <li><strong>Anti-evasion</strong> &middot; blocks common bypass tricks an agent might attempt under prompt influence.</li>
+      <li><strong>Web &amp; TUI dashboards</strong> &middot; live observation of agent behaviour during the engagement.</li>
+      <li><strong>SDK / API</strong> &middot; integration endpoints for Python and TypeScript agent frameworks.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Where it fits</h2>
+    <p>The core idea is preventing accidental damage from agents running real offensive security tasks: scope drift, destructive commands, credential leakage, or out-of-bound requests. Aegis sits in front of the agent and blocks those specifically, while letting the intended offensive operations go through.</p>
+  </section>
+
+  <section>
+    <h2>Status</h2>
+    <ul class="clean">
+      <li><span class="label">Repository</span><span class="meta"><a href="https://github.com/armendgashi-sentry/aegis" target="_blank" rel="noopener">github.com/armendgashi-sentry/aegis</a></span></li>
+      <li><span class="label">Language</span><span class="meta">Rust</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Using Aegis on a real engagement, building something similar, or interested in safety primitives for autonomous offensive AI? <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

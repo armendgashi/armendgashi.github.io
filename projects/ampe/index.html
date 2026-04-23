@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AMPE · Armend Gashi</title>
+<meta name="description" content="AMPE (Automated Malicious Prompt Engineering): a three-role CLI (attacker, target, evaluator) for systematically generating adversarial prompts across many providers and models." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>AMPE</h1>
+  <p class="subtitle">Automated Malicious Prompt Engineering &middot; an early look at systematic red-teaming across providers</p>
+
+  <section>
+    <h2>The idea</h2>
+    <p>AMPE started from a simple question: if you wanted to measure how hardened a model actually was, could you automate the adversarial side of the conversation? Pick a goal, point an attacker model at a target model, and let an evaluator decide whether the target crossed the line. Then repeat, rewrite, and keep notes.</p>
+    <p>Quick overview: an attacker model generates a malicious prompt for a user-provided goal; the target model responds; a third model evaluates whether the response satisfied the goal. If it didn&rsquo;t, the loop retries with a fresh attempt until the cap is hit.</p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p>AMPE is a Python CLI wired around three configurable roles, each backed by any provider/model combination through <code>config.yaml</code>.</p>
+    <ul>
+      <li><strong>Attacker</strong> &middot; generates adversarial prompts. Driven by an attack-type-specific system prompt (see below).</li>
+      <li><strong>Target</strong> &middot; the model under test. Receives the attacker&rsquo;s prompt and produces a response.</li>
+      <li><strong>Evaluator</strong> &middot; a judge model that reads the target&rsquo;s response and decides success or failure against the goal, using an attack-type-specific evaluation prompt.</li>
+    </ul>
+    <p>Goals can be a single string or a file of goals. Results (hash, goal, prompt, response, verdict, model metadata) log to CSV or MongoDB so runs can be replayed and compared later.</p>
+  </section>
+
+  <section>
+    <h2>Attack types</h2>
+    <p>Each attack type is backed by its own attacker/evaluator system prompt pair. The attacker prompt shapes how the malicious input is generated; the evaluator prompt shapes how success is judged.</p>
+    <ul>
+      <li><strong>Jailbreak</strong> &middot; direct attempts to break safety training.</li>
+      <li><strong>Safety layer bypass</strong> &middot; circumvent policy enforcement without a classic jailbreak.</li>
+      <li><strong>Reward hacking</strong> &middot; exploit the model&rsquo;s incentives / persona shaping.</li>
+      <li><strong>Prompt leak</strong> &middot; extract the target&rsquo;s system prompt.</li>
+      <li><strong>Multi-language</strong> &middot; route the request through another language.</li>
+      <li><strong>Biased</strong> / <strong>unethical</strong> / <strong>drunk</strong> / <strong>toxic response</strong> &middot; coerce specific undesirable styles.</li>
+      <li><strong>External browsing</strong> &middot; tease out behaviors tied to web-enabled agents.</li>
+      <li><strong>Special-character injection</strong> &middot; reshape the goal with Unicode fancy fonts (bold, small caps, fraktur, script, etc.) and feed that directly as the prompt.</li>
+      <li><strong>Encode</strong> &middot; wrap the goal in one of ~45 encodings (Base16/32/64/85, hex, Unicode escapes, Rot13, Caesar, URL, Morse-style, etc.) and ask the target to decode and follow.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Provider coverage</h2>
+    <p>Supports 12 providers and 244 unique models at the time of writing: AI21Labs, Replicate, Anyscale, Cohere, DeepInfra, Fireworks, Groq, Konko, Mistral, NVIDIA AI Foundation, OpenAI, Together AI. Any role (attacker / target / evaluator) can be bound to any provider/model, so you can, for example, attack OpenAI with a Mistral attacker and judge with Cohere.</p>
+  </section>
+
+  <section>
+    <h2>What I learned</h2>
+    <ul>
+      <li>Separating <em>attack generation</em> from <em>attack evaluation</em> into different models made results meaningfully more trustworthy: the judge doesn&rsquo;t have the attacker&rsquo;s biases baked in.</li>
+      <li>Hard-coded attack-type prompts were a better abstraction than a single &ldquo;generic attacker.&rdquo; Each category has its own definition of success, so pairing the attacker and evaluator per category keeps signals clean.</li>
+      <li>Persisting every attempt (prompt, response, verdict) to storage was the single most useful design choice. Most of the value came from replaying runs later, not from the live loop.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Code</h2>
+    <ul class="clean">
+      <li><span class="label">Repository</span><span class="meta"><a href="https://github.com/sentry-cybersecurity/AMPE-v2" target="_blank" rel="noopener">github.com/sentry-cybersecurity/AMPE-v2</a></span></li>
+      <li><span class="label">Language</span><span class="meta">Python &middot; Docker</span></li>
+      <li><span class="label">Storage</span><span class="meta">CSV or MongoDB</span></li>
+      <li><span class="label">Status</span><span class="meta">research; released May 2024, no longer under active development</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Working on red-team automation, evaluator models, or cross-provider benchmarks? Happy to compare notes. <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

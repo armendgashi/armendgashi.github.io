@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agentic Offensive Security · Armend Gashi</title>
+<meta name="description" content="Research and engineering on multi-agent LLM systems for offensive security: code review, false-positive validation, PoC creation, and reporting." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>Agentic Offensive Security <span class="status-pill live">Active R&amp;D</span></h1>
+  <p class="subtitle">Multi-agent LLM systems for source-code review, validation, and exploitation</p>
+
+  <section>
+    <h2>Premise</h2>
+    <p>Most &ldquo;AI for security&rdquo; tooling sits on the defensive side: anomaly detection, log triage, alert summarization. The offensive side has been slower to mature because the work is harder to formalize: it requires multi-step reasoning, code understanding, real validation (not just plausible-looking output), and the discipline to discard false positives instead of inflating findings.</p>
+    <p>This research builds and operates <strong>multi-agent systems</strong> against that gap, with explicit roles for hypothesis generation, validation, exploitation, and reporting.</p>
+  </section>
+
+  <section>
+    <h2>Capabilities</h2>
+    <ul>
+      <li><strong>Source-code vulnerability identification</strong> &middot; semantic analysis across files and language boundaries, not single-line pattern matching.</li>
+      <li><strong>False-positive validation on Semgrep findings</strong> &middot; agent traces taint, evaluates reachability, and discards findings that are unexploitable in context.</li>
+      <li><strong>Proof-of-concept generation</strong> &middot; the agent constructs and executes a working PoC, instead of asserting impact.</li>
+      <li><strong>Report generation</strong> &middot; structured technical and executive output, suitable for direct delivery into client-facing reports.</li>
+      <li><strong>Web &amp; API penetration testing assistance</strong> &middot; reasoning over request/response flows, auth state, and business logic.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Productized as SakiX</h2>
+    <p>The capabilities above are integrated into <a href="../../projects/sakix/index.html"><strong>SakiX</strong></a>, an internal agentic system used inside Sentry Security on real client engagements. SakiX serves as both the production target and the experimental harness for ongoing research.</p>
+  </section>
+
+  <section>
+    <h2>Adjacent work</h2>
+    <ul>
+      <li><a href="../sti/index.html">Special Token Injection (STI)</a> &middot; offensive AI capability that <em>also</em> exposes attack surface back at the LLM stack itself.</li>
+      <li><a href="../../projects/ex-machina/index.html">EX MACHINA</a> &middot; the workshop where these methods are taught hands-on.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Working on similar problems, such as agent harnesses, reproducible offensive evaluations, or false-positive triage benchmarks? <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

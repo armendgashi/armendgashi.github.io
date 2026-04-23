@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>insecure_agentic_api · Armend Gashi</title>
+<meta name="description" content="insecure_agentic_api: intentionally insecure FastAPI examples demonstrating common failure modes in agentic / tool-using LLM APIs, including Special Token Injection and role injection." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>insecure_agentic_api</h1>
+  <p class="subtitle">Small, intentionally insecure FastAPI examples showing common failure modes in agentic / tool-using LLM APIs</p>
+
+  <section>
+    <h2>The idea</h2>
+    <p>When teaching people how agentic LLM systems fail, it helps to have tiny, self-contained reproductions you can run and prod. insecure_agentic_api is exactly that: a handful of short, deliberately vulnerable scripts, each focused on a single failure mode, so the class of bug is obvious without wading through a full application.</p>
+    <p>The repo is used as hands-on material in workshops and for research on Special Token Injection, LLM API misconfigurations, and agent-level role injection.</p>
+  </section>
+
+  <section>
+    <h2>What&rsquo;s in it</h2>
+    <p>Four FastAPI / Python scripts, one vulnerability pattern each.</p>
+    <ul>
+      <li><strong><code>parameter_tampering.py</code></strong> &middot; a full chat-completions wrapper that forwards <em>arbitrary</em> request parameters to the OpenAI client. Clients can override server-side intent: pick a different model, disable safety-relevant knobs, inject tools, or change <code>tool_choice</code> / <code>response_format</code>. A textbook case of &ldquo;proxy more than you meant to.&rdquo;</li>
+      <li><strong><code>raw_sti.py</code></strong> &middot; a local <em>Special Token Injection</em> demo using Qwen2.5-1.5B-Instruct and a tool that executes SQL against a SQLite database. Shows how untrusted input can reshape the model&rsquo;s structural tokens and steer tool-call arguments into dangerous SQL.</li>
+      <li><strong><code>role_injection.py</code></strong> &middot; a multi-agent pipeline (code-gen agent → triage agent → language-specific executor). Demonstrates prompt/role injection across the agent graph, including bypass of the &ldquo;no OS libraries&rdquo; scope.</li>
+      <li><strong><code>unbounded_consumption.py</code></strong> &middot; a simplified chat API with HTTP tool execution that can be steered into unbounded tool usage and resource consumption (cost-blowup, loop-until-cap behavior).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How to run it</h2>
+    <p>Requirements: Python 3.10+, an OpenAI API key for the FastAPI examples, plus <code>torch</code> / <code>transformers</code> for <code>raw_sti.py</code>.</p>
+    <pre><code>pip install fastapi uvicorn openai httpx pydantic
+pip install torch transformers  # for raw_sti.py
+export OPENAI_API_KEY="your-key"
+
+uvicorn parameter_tampering:app --reload
+uvicorn role_injection:app --reload
+uvicorn unbounded_consumption:app --reload</code></pre>
+    <p>Then POST to the exposed endpoints (<code>/chat</code>, <code>/ask</code>, etc.) and try to break them.</p>
+  </section>
+
+  <section>
+    <h2>Why it exists</h2>
+    <p>Most public examples of agentic API code are either a real product (too much noise to see the bug) or a sanitized snippet (too little context to reproduce). These four scripts sit in between: big enough to behave like the real thing, small enough to reason about the attack surface end-to-end. They pair with the write-ups on <a href="https://blog.sentry.security/special-token-injection-sti-attack-guide/" target="_blank" rel="noopener">Special Token Injection</a> and <a href="https://blog.sentry.security/llm-api-misconfigurations/" target="_blank" rel="noopener">LLM API Misconfigurations</a>.</p>
+  </section>
+
+  <section>
+    <h2>Code</h2>
+    <ul class="clean">
+      <li><span class="label">Repository</span><span class="meta"><a href="https://github.com/sentry-cybersecurity/insecure_agentic_api" target="_blank" rel="noopener">github.com/sentry-cybersecurity/insecure_agentic_api</a></span></li>
+      <li><span class="label">Language</span><span class="meta">Python &middot; FastAPI &middot; transformers</span></li>
+      <li><span class="label">Released</span><span class="meta">Sep 2025</span></li>
+      <li><span class="label">Related</span><span class="meta"><a href="../../research/sti/">STI research</a> &middot; <a href="https://blog.sentry.security/llm-api-misconfigurations/" target="_blank" rel="noopener">LLM API Misconfigurations</a></span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Intended use</h2>
+    <p>Strictly for learning, research, and hardening your own systems. Do not deploy any of this against infrastructure you do not own or have explicit permission to test.</p>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Teaching with this repo, extending it with new failure modes, or writing evaluations against it? Happy to compare notes. <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

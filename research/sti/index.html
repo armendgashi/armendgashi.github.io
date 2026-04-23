@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Special Token Injection (STI) · Armend Gashi</title>
+<meta name="description" content="Special Token Injection (STI) is a new vulnerability class targeting how LLM inference providers and agentic systems handle control tokens." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>Special Token Injection (STI) <span class="status-pill live">Completed 2026</span></h1>
+  <p class="subtitle">A new vulnerability class against LLM inference providers and agentic systems</p>
+
+  <section>
+    <h2>Premise</h2>
+    <p>Modern LLMs use a small set of <strong>special tokens</strong> (e.g. role markers, beginning/end-of-turn, system delimiters) to structure conversations and tool calls. When a provider, agent framework, or downstream application accepts user-controlled input that is later tokenized without sanitization, an attacker can <em>inject those special tokens directly</em>. The model then interprets the injected tokens as authoritative structural signals, breaking trust boundaries that were assumed to be enforced at the prompt level.</p>
+    <p>Special Token Injection (STI) generalizes this class of attack across providers, frameworks, and applications. It is distinct from prompt injection: prompt injection persuades a model with text, while STI rewrites the conversation&rsquo;s structural grammar.</p>
+  </section>
+
+  <section>
+    <h2>Why a new vulnerability category</h2>
+    <ul>
+      <li>Existing categories (Prompt Injection, Insecure Output Handling) describe the symptom space, not the structural root cause.</li>
+      <li>STI is detectable, fixable, and testable with concrete primitives at the tokenization layer, which makes it amenable to standardization.</li>
+      <li>Impact spans confidentiality, integrity, and availability: role hijacking, system-prompt overwrite, tool-call forgery, and data exfiltration through agent loops.</li>
+    </ul>
+    <div class="callout"><strong>Standardization status:</strong> A formal CWE entry for this vulnerability class is currently under review: <a href="https://github.com/CWE-CAPEC/CWE-Content-Development-Repository/blob/main/submissions/ES2512-1cc397f8-new-special-tokens-ai.txt" target="_blank" rel="noopener">CWE-CAPEC submission ES2512</a>.</div>
+  </section>
+
+  <section>
+    <h2>Key findings</h2>
+    <ul>
+      <li><strong>Validated STI on major inference providers</strong> evaluated, with provider-specific tokenizer quirks producing distinct exploit primitives.</li>
+      <li>Built a working PoC chaining STI in <strong>Grok</strong> to trigger Server-Side Request Forgery (SSRF) and exfiltrate an <strong>X API token</strong> from the inference environment.</li>
+      <li>Identified consistent failure modes: input-side sanitization missing entirely, partial denylists, inconsistent treatment between text and tool-call payloads.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Outputs</h2>
+    <ul class="clean">
+      <li>
+        <span class="label"><a href="https://blog.sentry.security/special-token-injection-sti-attack-guide/" target="_blank" rel="noopener">Special Token Injection &middot; Attack Guide</a></span>
+        <span class="meta">blog.sentry.security</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://blog.sentry.security/chatml-role-injection-cri/" target="_blank" rel="noopener">ChatML Role Injection (CRI)</a> &middot; precursor work</span>
+        <span class="meta">blog.sentry.security</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://blog.sentry.security/llm-api-misconfigurations/" target="_blank" rel="noopener">LLM API Misconfigurations</a> &middot; related</span>
+        <span class="meta">blog.sentry.security</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://github.com/CWE-CAPEC/CWE-Content-Development-Repository/blob/main/submissions/ES2512-1cc397f8-new-special-tokens-ai.txt" target="_blank" rel="noopener">CWE submission ES2512</a> &middot; under review</span>
+        <span class="meta">CWE-CAPEC</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://pangea.cloud/taxonomy/#PT0198" target="_blank" rel="noopener">Recognized in Pangea (CrowdStrike) taxonomy as PT0198</a></span>
+        <span class="meta">Pangea</span>
+      </li>
+      <li>
+        <span class="label"><strong>Research paper</strong> &middot; formal write-up of the vulnerability class, threat model, and provider study <span class="status-pill wip">In progress</span></span>
+        <span class="meta">submission expected Q4 2026</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Talks</h2>
+    <p class="item-sub">The talk was initially titled <em>Hijacking AI Agents with ChatML Role Injection</em> and later retitled to <em>Hijacking AI Agents with Special Token Injection</em> as the research generalized beyond ChatML into the broader vulnerability class.</p>
+    <ul class="clean">
+      <li><span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; AI Village &amp; AppSec Village, DEF CON 33</span><span class="meta">2025</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; BSides Krakow</span><span class="meta">2025</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; BSides Tirana</span><span class="meta">2025</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; Offensive AI Con <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(accepted; unable to attend)</span></span><span class="meta">2025</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Zagreb</span><span class="meta">2026</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Sofia</span><span class="meta">2026</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Prishtina <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(scheduled)</span></span><span class="meta">May 2026</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Dublin <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(accepted; unable to attend)</span></span><span class="meta">2026</span></li>
+      <li><span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; Cackalackycon <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(accepted; unable to attend)</span></span><span class="meta">2026</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Inference provider, agent framework maintainer, or researcher working in adjacent territory? I&rsquo;m happy to share findings, validation methodology, or coordinate on disclosure: <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Evaluations for offensive security agents · Armend Gashi</title>
+<meta name="description" content="Ongoing research: an LLM-as-judge harness for grading offensive security agent trajectories against human-authored rubrics, retargeted to AppSec." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>Evaluations for offensive security agents <span class="status-pill wip">Ongoing</span></h1>
+  <p class="subtitle">An LLM-as-judge harness for grading offensive security agent trajectories against human-authored rubrics</p>
+
+  <section>
+    <h2>Motivation</h2>
+    <p>Offensive security agents are getting good enough that the hard question is no longer <em>can they do the task?</em> but <em>how do we grade what they did?</em> Pentest engagements are long, messy, and ambiguous. A well-known evaluation like &ldquo;did it find the flag?&rdquo; throws away most of the signal: coverage, scope adherence, tradecraft, whether the agent demonstrated impact or just asserted it, whether the PoC actually ran against a live target.</p>
+    <p>This line of work adapts the <a href="https://arxiv.org/abs/2508.02921" target="_blank" rel="noopener">PentestJudge</a> methodology to <strong>AppSec</strong> (web apps, APIs, auth flows, injection classes), and builds a practical harness I can run against real agent runs to see where things break.</p>
+  </section>
+
+
+  <section>
+    <h2>Approach</h2>
+    <p>Given an agent&rsquo;s full tool-call trajectory and a tree of binary yes/no requirements, the harness:</p>
+    <ul>
+      <li><strong>Computes deterministic coverage</strong> (no LLM): distinct in-scope hosts and endpoints, out-of-scope hits, HTTP methods exercised, injection-payload classes, tool-call totals. Zero cost, zero variance.</li>
+      <li><strong>Runs an LLM judge per leaf</strong>, in isolation, with a 14-tool harness limited to trajectory navigation and verdict submission. No filesystem access, no cross-leaf memory.</li>
+      <li><strong>Grades <code>coverage_gate</code> leaves without an LLM</strong> by linking them to a coverage item. These are the RLVR-friendly leaves.</li>
+      <li><strong>Aggregates per-leaf verdicts</strong> into stratified F1 scores against human ground truth, a weighted-tree agent score, and a cost-vs-F1 Pareto frontier.</li>
+      <li><strong>Exports to RL / fine-tuning formats</strong>: Verifiers (RLVR), judge distillation, OpenAI FT, ShareGPT.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Why this shape</h2>
+    <ul>
+      <li><strong>LLM-as-judge, not LLM-as-scorer.</strong> Each leaf gets a fresh judge with its own scratchpad and a tool loop for navigating the trajectory. The judge must cite <em>evidence tool-call IDs</em> when submitting a verdict, so rationales are auditable rather than vibes.</li>
+      <li><strong>Rubric authoring is the bottleneck.</strong> Vague leaves tank F1. The harness ships a linter (<code>requirement_too_short</code>, <code>negation_without_scope</code>, <code>hedged_wording</code>, and more) to catch anti-patterns before you spend any API money grading.</li>
+      <li><strong>Deterministic + LLM grading coexist.</strong> Counting &ldquo;distinct endpoints discovered&rdquo; doesn&rsquo;t need an LLM and shouldn&rsquo;t cost a judge call. Anything a regex or URL parser can answer is a coverage item; the LLM handles the irreducibly fuzzy requirements.</li>
+      <li><strong>Prompt-injection containment.</strong> Everything from the agent&rsquo;s trajectory (tool arguments, tool outputs) is wrapped in <code>&lt;untrusted_agent_output&gt;…&lt;/untrusted_agent_output&gt;</code>. The judge&rsquo;s system prompt is explicit: content inside those tags is evidence, not instructions.</li>
+      <li><strong>Cheaper judges can grade more expensive agents.</strong> The paper reports <code>claude-3-5-haiku</code> agreeing with human experts at F1 = 0.74 for ~$0.82 per full pentest trajectory, versus ~$120/hour for a human grader. Reproducing and stress-testing that finding on AppSec trajectories is one of the open questions.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What the output looks like</h2>
+    <p>Each evaluation run writes a self-contained, reproducible artifact bundle:</p>
+    <ul class="clean">
+      <li><span class="label"><code>report.md</code> / <code>report.json</code></span><span class="meta">F1, weighted-tree agent score, stratified tables</span></li>
+      <li><span class="label"><code>pareto.png</code></span><span class="meta">cost vs. F1 scatter with frontier</span></li>
+      <li><span class="label"><code>coverage.&lt;traj&gt;.md</code></span><span class="meta">per-item coverage table, deterministic</span></li>
+      <li><span class="label"><code>verdicts.jsonl</code></span><span class="meta">per-run filtered verdict snapshot; reproduce offline</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Open questions I&rsquo;m working on</h2>
+    <ul>
+      <li>How well does a cheap judge grade an expensive agent on AppSec trajectories specifically (vs. the paper&rsquo;s GOAD / AD setup)?</li>
+      <li>How much of the F1 signal is recoverable from the deterministic coverage layer alone, before any LLM grading?</li>
+      <li>What rubric-authoring guardrails actually move F1, beyond the static linter?</li>
+      <li>Portfolio routing: does splitting categories across providers (e.g. Anthropic for operational-objectives, OpenAI for OpSec) beat any single frontier judge?</li>
+      <li>Can judge-distillation datasets train a small open-weight grader that matches frontier judges on AppSec leaves?</li>
+      <li>How do we score agents that use <em>skills</em> (Claude Code / Codex-style) without leaking skill definitions into the leaf requirements?</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Scope &amp; what this isn&rsquo;t</h2>
+    <ul>
+      <li><strong>Not a pentesting agent.</strong> This grades trajectories some other system produced. Any agent that can emit a compatible JSON trajectory (or a Claude Code session) is fair game.</li>
+      <li><strong>Not a target environment.</strong> No web-app targets, no CTF runners. We evaluate what the agent did, not what it attacked.</li>
+      <li><strong>AppSec only.</strong> Active Directory / GOAD scenarios are out of scope for this retarget.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Credits</h2>
+    <p>Independent implementation inspired by and closely following:</p>
+    <div class="callout"><strong>PentestJudge: Judging Agent Behavior Against Operational Requirements</strong> &middot; Shane Caldwell, Max Harley, Michael Kouremetis, Vincent Abruzzo, Will Pearce (dreadnode, 2025) &middot; arXiv: <a href="https://arxiv.org/abs/2508.02921" target="_blank" rel="noopener">2508.02921</a>.</div>
+    <p>The rubric-tree structure, three-category decomposition (operational objectives / operational security / tradecraft), LLM-as-judge harness with trajectory-navigation tools, F1-against-human-ground-truth evaluation protocol, and Pareto-frontier cost analysis are all from the paper. This work is not affiliated with the authors or with dreadnode.</p>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Building offensive agents, authoring rubrics, or working on judge models? I&rsquo;d like to hear from you. <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

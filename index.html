@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Armend Gashi · Offensive Security & AI Security Research</title>
+<meta name="description" content="Armend Gashi · Managing Security Consultant at Sentry Security. Offensive security, red teaming, and AI security research." />
+<meta name="author" content="Armend Gashi" />
+<meta property="og:title" content="Armend Gashi" />
+<meta property="og:description" content="Offensive security and AI security research." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<nav class="toc" aria-label="page sections">
+  <span class="toc-title">On this page</span>
+  <ol>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#cves">Published CVEs</a></li>
+    <li><a href="#talks">Talks</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#community">Community</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education &amp; Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</nav>
+
+<div class="container">
+
+  <header class="hero">
+    <h1 class="name">Armend Gashi</h1>
+    <p class="role">Offensive security &middot; AI security research &middot; <span class="accent">Pristina, Kosovo 🇽🇰</span></p>
+    <nav class="links" aria-label="primary">
+      <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>
+      <a href="https://github.com/armendgashi" target="_blank" rel="noopener">github.com/armendgashi</a>
+      <a href="https://github.com/armendgashi-sentry" target="_blank" rel="noopener">github.com/armendgashi-sentry</a>
+      <a href="https://www.linkedin.com/in/armend-gashi/" target="_blank" rel="noopener">linkedin.com/in/armend-gashi</a>
+    </nav>
+  </header>
+
+  <section class="about" id="about">
+    <h2>About</h2>
+    <p>Managing Security Consultant and Head of Research &amp; Development at <a href="https://sentry.security" target="_blank" rel="noopener">Sentry Security</a>, where I lead offensive security delivery and the research and development program. For the past 2+ years my focus has been heavily invested in AI security: vulnerability research, offensive agents, and safety of frontier model deployments. Previously instructor and mentor at <a href="https://www.cyberacademy.co" target="_blank" rel="noopener">Cyber Academy</a>, designing curriculum and training consultants entering the industry.</p>
+    <p>Current research focus: <strong>evaluations for offensive security agents</strong> (LLM-as-judge harnesses, rubric design, and deterministic coverage metrics for grading agent trajectories). Previously led the <strong>Special Token Injection (STI)</strong> research (completed in 2026), a new vulnerability class against LLM inference providers and agentic systems, presented at AI Village and AppSec Village, DEF CON 33, with a formal research paper scheduled for submission in Q4 2026.</p>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+
+    <div class="company">
+      <div class="company-head">
+        <h3 class="company-name">Sentry Security</h3>
+        <span class="item-meta">Pristina, Kosovo &middot; Oct 2020 to Present</span>
+      </div>
+
+      <div class="role-list">
+        <div class="role-entry">
+          <div class="role-head">
+            <h4 class="role-title" style="font-family:var(--sans); text-transform:none; letter-spacing:0;">Managing Security Consultant &middot; Head of Research &amp; Development</h4>
+            <span class="item-meta">Oct 2021 to Present</span>
+          </div>
+          <ul class="bullets">
+            <li>Conducted and led 300+ client-facing offensive security engagements for clients including Fortune 500 and FAANG; Delivered projects for Google&rsquo;s OAuth CASA/MASA verification program.</li>
+            <li>Lead a team of 15+ security consultants engaged as subcontractors for Veracode, Bishop Fox, Prompt Security, Snyk, StackAware, Leviathan Security Group, and Outpost24.</li>
+            <li>Authored 300+ technical reports documenting 800+ findings (including 0-days) across web, APIs, mobile, thick applications, external and internal infrastructure, and cloud.</li>
+            <li>Established the Cloud Penetration Testing and GenAI Application Penetration Testing service lines, aligned with industry standards.</li>
+            <li>Built and run the Research &amp; Development (R&amp;D) department focused on AI security; discovered Special Token Injection and presented the research at AI Village and AppSec Village, DEF CON 33.</li>
+            <li>Organized the EX MACHINA conference, workshop, and CTF, the first on offensive AI agents, and led the hands-on workshop for 100+ attendees.</li>
+            <li>Develop internal offensive tooling (LLM-agnostic agents for source-code auditing and web/API exploitation) and own the QA procedure for client deliverables.</li>
+            <li>Manage client relationships end-to-end: RFPs, kick-offs, technical and executive presentations, escalations, and remediation consulting.</li>
+          </ul>
+        </div>
+
+        <div class="role-entry">
+          <div class="role-head">
+            <h4 class="role-title" style="font-family:var(--sans); text-transform:none; letter-spacing:0;">Security Consultant</h4>
+            <span class="item-meta">Dec 2020 to Oct 2021</span>
+          </div>
+          <p class="item-sub">Promoted from internship. Executed application and infrastructure penetration tests, contributed to client deliverables, and built foundations in red team operations.</p>
+        </div>
+
+        <div class="role-entry">
+          <div class="role-head">
+            <h4 class="role-title" style="font-family:var(--sans); text-transform:none; letter-spacing:0;">Security Intern</h4>
+            <span class="item-meta">Oct 2020 to Dec 2020</span>
+          </div>
+          <p class="item-sub">Two-month internship; promoted to Security Consultant at the end of the program.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="company">
+      <div class="company-head">
+        <h3 class="company-name">Cyber Academy</h3>
+        <span class="item-meta">Dec 2021 to Jun 2023</span>
+      </div>
+      <div class="role-list">
+        <div class="role-entry">
+          <div class="role-head">
+            <h4 class="role-title" style="font-family:var(--sans); text-transform:none; letter-spacing:0;">Instructor / Mentor</h4>
+          </div>
+          <ul class="bullets">
+            <li>Designed curriculum and served as lead instructor across multiple 3-month advanced penetration testing programs; trained 40 consultants, with 22 securing full-time positions.</li>
+            <li>Motivated, trained, and supported 50+ students internationally entering the cybersecurity industry.</li>
+            <li>Developed 30+ new cyber range and CTF lab scenarios focused on application security.</li>
+            <li>Assessed student progress through practical exercises, exams, and projects; provided constructive feedback and growth plans.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>Anthropic &middot; Model Safety (Contract)</h3>
+        <span class="item-meta">Dec 2024 to Apr 2025</span>
+      </div>
+      <p class="item-sub">Participated in Anthropic&rsquo;s private model safety program via HackerOne, surfacing safety and security issues against frontier model deployments. HackerOne handle: <a href="https://hackerone.com/multiagentchaoscoordinator" target="_blank" rel="noopener"><code>@multiagentchaoscoordinator</code></a>.</p>
+    </div>
+  </section>
+
+  <section id="research">
+    <h2>Research</h2>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="research/sti/">Special Token Injection (STI)</a></h3>
+        <span class="item-meta">2025 to 2026 &middot; Completed</span>
+      </div>
+      <p>Introduced STI as a new, distinct vulnerability category targeting how LLM inference providers and agentic applications handle special / control tokens. Work spanned theoretical framing, validation across providers, public CWE submission, and talks at DEF CON 33 and multiple BSides. A formal research paper is in progress, scheduled for submission in Q4 2026.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="research/agent-evals/">Evaluations for offensive security agents</a> <span class="status-pill wip">Ongoing</span></h3>
+        <span class="item-meta">2026 to Present</span>
+      </div>
+      <p>Building an LLM-as-judge harness for grading offensive security agent trajectories against human-authored rubrics, retargeted to AppSec (web apps, APIs, auth flows, injection classes). Pairs a deterministic coverage layer (no LLM) with per-leaf LLM judges, produces F1 against human ground truth, cost-vs-accuracy Pareto frontiers, and RL / fine-tuning exports. Built on the methodology of the <a href="https://arxiv.org/abs/2508.02921" target="_blank" rel="noopener">PentestJudge paper</a> (Caldwell et al., dreadnode, 2025).</p>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="projects/sakix/">SakiX</a></h3>
+        <span class="item-meta">Research &middot; 2024</span>
+      </div>
+      <p>Early research on what AI could do for offensive security: a multi-agent CLI that runs Semgrep, triages findings with an LLM to cut false positives, and drives a separate agent to read code and propose PoCs. Not a product, a hands-on prototype to see how far agentic workflows could go on real code.</p>
+    </div>
+  </section>
+
+  <section id="cves">
+    <h2>Published CVEs</h2>
+    <ul class="clean">
+      <li>
+        <span class="label"><span class="tag crit">Critical</span><a href="https://www.cve.org/CVERecord?id=CVE-2023-26482" target="_blank" rel="noopener"><code>CVE-2023-26482</code></a> &middot; Code Execution</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><span class="tag high">High</span><a href="https://www.cve.org/CVERecord?id=CVE-2023-48239" target="_blank" rel="noopener"><code>CVE-2023-48239</code></a> &middot; Update Arbitrary User Storage</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><span class="tag high">High</span><a href="https://www.cve.org/CVERecord?id=CVE-2023-35928" target="_blank" rel="noopener"><code>CVE-2023-35928</code></a> &middot; User Account Hijacking</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><span class="tag med">Medium</span><a href="https://www.cve.org/CVERecord?id=CVE-2023-45660" target="_blank" rel="noopener"><code>CVE-2023-45660</code></a> &middot; Application-level Denial of Service</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><span class="tag med">Medium</span><a href="https://www.cve.org/CVERecord?id=CVE-2023-48301" target="_blank" rel="noopener"><code>CVE-2023-48301</code></a> &middot; Arbitrary Browser Code Injection</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><span class="tag low">Low</span><a href="https://www.cve.org/CVERecord?id=CVE-2023-48307" target="_blank" rel="noopener"><code>CVE-2023-48307</code></a> &middot; Server-Side Request Forgery</span>
+        <span class="meta">2023</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="talks">
+    <h2>Talks</h2>
+    <ul class="clean">
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; AI Village &amp; AppSec Village, DEF CON 33 &middot; <a href="https://www.youtube.com/watch?v=UyVXl74lZi0" target="_blank" rel="noopener">video</a></span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; BSides Krakow</span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; BSides Tirana</span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with ChatML Role Injection</strong> &middot; Offensive AI Con <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(accepted; unable to attend)</span></span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Zagreb</span>
+        <span class="meta">2026</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Sofia</span>
+        <span class="meta">2026</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Prishtina <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(scheduled)</span></span>
+        <span class="meta">May 2026</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; BSides Dublin <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(accepted; unable to attend)</span></span>
+        <span class="meta">2026</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hijacking AI Agents with Special Token Injection</strong> &middot; Cackalackycon <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(accepted; unable to attend)</span></span>
+        <span class="meta">2026</span>
+      </li>
+      <li>
+        <span class="label"><strong>AI and Cyber Ops</strong> &middot; DigiDay</span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><strong>Hack-Proof Your Code</strong> &middot; KOSICT (Presentation)</span>
+        <span class="meta">2024</span>
+      </li>
+      <li>
+        <span class="label"><strong>Deploying AI with Confidence</strong> &middot; KOSICT (Workshop)</span>
+        <span class="meta">2024</span>
+      </li>
+      <li>
+        <span class="label"><strong>Security Insights into Modern Authentication Protocols</strong> &middot; BSides Transylvania</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><strong>Unveiling Hidden Threats: 0-Days, Impact, and Implications</strong> &middot; BSides Tirana</span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><strong>What do OAuth and Football Clubs have in common?</strong> &middot; BSides Prishtina</span>
+        <span class="meta">2022</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="writing">
+    <h2>Writing</h2>
+    <ul class="clean">
+      <li>
+        <span class="label"><a href="https://blog.sentry.security/special-token-injection-sti-attack-guide/" target="_blank" rel="noopener">Special Token Injection (STI) &middot; Attack Guide</a></span>
+        <span class="meta">blog.sentry.security</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://blog.sentry.security/chatml-role-injection-cri/" target="_blank" rel="noopener">ChatML Role Injection (CRI)</a></span>
+        <span class="meta">blog.sentry.security</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://blog.sentry.security/llm-api-misconfigurations/" target="_blank" rel="noopener">LLM API Misconfigurations</a></span>
+        <span class="meta">blog.sentry.security &middot; Jan 2026</span>
+      </li>
+      <li>
+        <span class="label">Research paper on Special Token Injection <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(in progress; submission expected Q4 2026)</span></span>
+        <span class="meta">2026</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://medium.com/@armendgashx/forwarding-snort-logs-to-elk-stack371232699e7f" target="_blank" rel="noopener">Forwarding Snort logs to ELK stack</a></span>
+        <span class="meta">Medium &middot; May 2020</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="community">
+    <h2>Community</h2>
+    <ul class="clean">
+      <li>
+        <span class="label"><strong><a href="#cves">NextCloud</a></strong> &middot; Responsible disclosures to the open-source project; see <a href="#cves">Published CVEs</a></span>
+        <span class="meta">2023</span>
+      </li>
+      <li>
+        <span class="label"><strong><a href="community/dc38338/">DEF CON Group Prishtina (DC38338)</a></strong> &middot; Contributor; Hack the Planet Magazine author</span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><strong>Establishing AI Security Village, DEF CON Group Prishtina</strong> <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">(expected Jun 2026)</span></span>
+        <span class="meta">In progress</span>
+      </li>
+      <li>
+        <span class="label">Reported undisclosed <strong>Special Token Injection</strong> vulnerability affecting major open-source inference providers</span>
+        <span class="meta">Undisclosed</span>
+      </li>
+      <li>
+        <span class="label">Reported undisclosed <strong>Server-side Template Injection</strong> vulnerability affecting a major open-source inference provider</span>
+        <span class="meta">Undisclosed</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="projects/aegis/">Aegis</a> &middot; <a href="https://github.com/armendgashi-sentry/aegis" target="_blank" rel="noopener">repo</a></h3>
+        <span class="item-meta">Creator &middot; Mar 2026</span>
+      </div>
+      <p>HTTP proxy guardrail for agentic penetration testing. Wraps autonomous agents (Claude Code, Codex CLI, custom tools) with scope enforcement, kernel-isolated sandboxing, proxy-based secret injection, and full audit logging, so offensive AI can be safely deployed on real client engagements.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="projects/sakix/">SakiX</a> &middot; <a href="https://github.com/sentry-cybersecurity/sakix" target="_blank" rel="noopener">repo</a></h3>
+        <span class="item-meta">Creator &middot; Sep 2024</span>
+      </div>
+      <p>An early research project on what AI could do for offensive security. LLM-powered CLI tool for source-code analysis: vulnerability identification, false-positive validation against SAST findings, PoC generation, and structured report output.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="projects/ampe/">AMPE</a> &middot; <a href="https://github.com/sentry-cybersecurity/AMPE-v2" target="_blank" rel="noopener">repo</a></h3>
+        <span class="item-meta">Creator &middot; May 2024</span>
+      </div>
+      <p>Automated Malicious Prompt Engineering: tooling to systematically generate and evaluate adversarial prompts against LLM-backed applications.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="projects/insecure-agentic-api/">insecure_agentic_api</a> &middot; <a href="https://github.com/sentry-cybersecurity/insecure_agentic_api" target="_blank" rel="noopener">repo</a></h3>
+        <span class="item-meta">Creator &middot; Sep 2025</span>
+      </div>
+      <p>Intentionally vulnerable agentic API demonstrating Special Token Injection and common LLM API misconfigurations, used as hands-on material for training and research.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3><a href="projects/ex-machina/">EX MACHINA</a></h3>
+        <span class="item-meta">Organizer &amp; Workshop Lead &middot; Nov 2024</span>
+      </div>
+      <p>Founded and organized the first regional conference, workshop, and CTF on agentic offensive security. Led the hands-on workshop personally for 100+ attendees and engineered LLM-powered agents for autonomous code auditing and web/API exploitation.</p>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education &amp; Certifications</h2>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>University of Business and Technology &middot; B.Sc. Computer Science &amp; Engineering</h3>
+        <span class="item-meta">2018 to Present &middot; In progress</span>
+      </div>
+      <p class="item-sub">Specialization: Cyber Security. Coursework: Network Security, Cryptography, Ethical Hacking, Secure Software Development.</p>
+    </div>
+
+    <ul class="clean">
+      <li>
+        <span class="label"><a href="https://badges.parchment.eu/public/assertions/X2OU_ofjTaSPuwwXNdbqEg?identity__email=agashi@sentry.security" target="_blank" rel="noopener">Certified Red Team Operator (CRTO)</a></span>
+        <span class="meta">2025</span>
+      </li>
+      <li>
+        <span class="label"><a href="https://portswigger.net/web-security/e/c/290493a7e1c714f3" target="_blank" rel="noopener">Burp Suite Certified Practitioner</a> <span class="muted" style="color:var(--muted); font-family:var(--mono); font-size:12px;">&middot; Credential ID 290493A7E1C714F3</span></span>
+        <span class="meta">Nov 2023</span>
+      </li>
+      <li><span class="label">Cyber Academy Certified Instructor</span><span class="meta">2022</span></li>
+      <li><span class="label">Cyber Academy Certified Expert</span><span class="meta">2021</span></li>
+      <li><span class="label">Cyber Academy Certified Professional</span><span class="meta">2020</span></li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>For research collaboration, consulting inquiries, or speaking invitations:</p>
+    <p><a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a></p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span>Built by hand &middot; no trackers</span>
+  </footer>
+
+</div>
+</body>
+</html>

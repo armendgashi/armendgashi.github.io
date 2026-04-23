@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SakiX · Armend Gashi</title>
+<meta name="description" content="SakiX: early research using LLM agents and Semgrep to analyze code for vulnerabilities, triage false positives, and draft PoCs." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%E2%96%B6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<div class="container page">
+
+  <a href="../../index.html" class="back-link">back</a>
+
+  <h1>SakiX 🪓</h1>
+  <p class="subtitle">Hands-on research on what AI could do for offensive security in 2024</p>
+
+  <section>
+    <h2>The idea</h2>
+    <p>SakiX started as a curiosity: how far could LLM agents take us if we pointed them at real code the way a consultant would?</p>
+    <p>Quick overview: run Semgrep, then hand the findings (and the surrounding code) to an LLM agent that argues about whether each one is actually exploitable. For spots where static analysis has nothing to say, let a second agent read files on demand and reason about vulnerabilities from scratch.</p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p>SakiX is a small Python CLI with three subcommands, backed by <a href="https://microsoft.github.io/autogen/" target="_blank" rel="noopener">AutoGen</a> agents and MongoDB for persistence.</p>
+    <ul>
+      <li><strong><code>semgrep</code></strong> &middot; runs Semgrep against a target path with a chosen ruleset and stores findings in MongoDB.</li>
+      <li><strong><code>semgrep_llm</code></strong> &middot; walks those findings and asks an agent (<em>SemgrepCheckerAgent</em>, GPT-4) to validate each one against the real source file. The agent returns a structured verdict: valid or false positive, a hypothesis, a PoC when applicable, and a proposed fix.</li>
+      <li><strong><code>llm_scan</code></strong> &middot; skips Semgrep entirely. A <em>FileReaderAgent</em> reads the file on demand; a <em>SecurityCheckerAgent</em> (GPT-4) reasons about vulnerabilities end to end and outputs a JSON report.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Why agents for this</h2>
+    <p>Traditional SAST tools are noisy. They flag patterns, not behaviors: a sink gets reported whether or not tainted input actually reaches it, whether or not a framework-level sanitizer neutralizes it upstream, and whether or not the surrounding code makes the path unreachable in practice.</p>
+    <p>Agents change the shape of that problem by bringing context back into the loop. The research was seeing how close an agent could get to that read-and-decide loop: forcing explicit reasoning per finding, demanding a PoC instead of a label, and letting it say &ldquo;false positive&rdquo; with a reason rather than padding a report.</p>
+  </section>
+
+  <section>
+    <h2>What I learned</h2>
+    <ul>
+      <li>Agents are great at the <em>triage</em> step once they have the code in front of them; they&rsquo;re noisier when asked to discover vulnerabilities cold.</li>
+      <li>Splitting the work across two agents kept the loop tight: one agent only read files on demand (<em>FileReaderAgent</em>), the other only reasoned about the code it was handed (<em>SecurityCheckerAgent</em>). Each had a narrower job and a clearer stop condition, with control handed back when a message contained a sentinel token like <code>TERMINATE</code>.</li>
+      <li>Forcing JSON output with a rigid schema removed most of the &ldquo;agent wandered off&rdquo; failure modes. Retrying on invalid JSON covered the rest. (Back then, AutoGen didn&rsquo;t yet support native structured output, so this schema-plus-retry pattern was the workaround.)</li>
+      <li>MongoDB was handy for replaying findings through new prompts without re-running Semgrep.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Code</h2>
+    <ul class="clean">
+      <li><span class="label">Repository</span><span class="meta"><a href="https://github.com/sentry-cybersecurity/sakix" target="_blank" rel="noopener">github.com/sentry-cybersecurity/sakix</a></span></li>
+      <li><span class="label">Language</span><span class="meta">Python 3.11+ &middot; AutoGen &middot; Semgrep &middot; MongoDB</span></li>
+      <li><span class="label">License</span><span class="meta">AGPL-3.0</span></li>
+      <li><span class="label">Status</span><span class="meta">research; no longer under active development</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Get in touch</h2>
+    <p>Working on agents for offensive code analysis or evaluation benchmarks? Happy to compare notes. <a href="mailto:armendgashx@protonmail.com">armendgashx@protonmail.com</a>.</p>
+  </section>
+
+  <footer>
+    <span>&copy; Armend Gashi</span>
+    <span><a href="../../index.html">home</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
